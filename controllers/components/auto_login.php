@@ -186,7 +186,8 @@ class AutoLoginComponent extends Object {
 
 			switch ($Controller->action) {
 				case $this->settings['loginAction']:
-					if (isset($data[$userModel])) {
+					$authField = $this->Auth->fields['username'];
+					if (!empty($data[$userModel][$authField])) {
 						$formData = $data[$userModel];
 						$username = $formData[$this->Auth->fields['username']];
 						$password = $formData[$this->Auth->fields['password']];

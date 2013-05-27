@@ -99,6 +99,7 @@ class AutoLoginComponent extends Object {
 		$this->_hasInitialized = true;
 		
 		$this->_set($settings);
+		$this->settings = array_merge($this->settings, $settings);
 	}
 
 	/**
@@ -191,9 +192,9 @@ class AutoLoginComponent extends Object {
 						$formData = $data[$userModel];
 						$username = $formData[$this->Auth->fields['username']];
 						$password = $formData[$this->Auth->fields['password']];
-						$autoLogin = isset($formData['auto_login']) ? $formData['auto_login'] : 0;
+						$autoLogin = $this->settings['requirePrompt'] === false || ((isset($formData['auto_login'])) ? $formData['auto_login'] : 0);
 
-						if (!empty($username) && !empty($password) && $autoLogin == 1) {
+						if ((!empty($username) && !empty($password) && $autoLogin == 1)) {
 							$this->save($username, $password);
 
 						} else if ($autoLogin == 0) {
